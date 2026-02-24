@@ -1,8 +1,10 @@
-# 🔗 URL Shortener (Scalable System Design Project)
+# URL Shortener (Scalable System Design Project)
 
 A high-performance, full-stack URL shortening service engineered with FAANG-level system design principles in mind. This project demonstrates how to build a scalable, decoupled architecture using Node.js, React, MongoDB, and Redis.
 
-## 🚀 Features
+*[A good read](https://www.educative.io/courses/grokking-the-system-design-interview/system-design-tinyurl?eid=5082902844932096&utm_term=&utm_campaign=%5BNew+-+Mar+24%5D+Brand+Core+Performance+Max&utm_source=adwords&utm_medium=ppc&hsa_acc=5451446008&hsa_cam=21099703438&hsa_grp=&hsa_ad=&hsa_src=x&hsa_tgt=&hsa_kw=&hsa_mt=&hsa_net=adwords&hsa_ver=3&gad_source=1&gad_campaignid=21089679273&gbraid=0AAAAADfWLuSVWBKwNFeO63kQFKi8rGAJ0&gclid=CjwKCAiAzOXMBhASEiwAe14SaeDqP9NRLbv6zuqli34QHGGjDSCvpuMT9AwdB-jBI4R-4x15Ra0K6xoCLj0QAvD_BwE)*
+
+## Features
 
 * **Base-58 Encoding Logic**: Utilizes a robust Base-58 encoding algorithm combined with a centralized, auto-incrementing MongoDB counter to generate clean, collision-resistant unique short URLs.
 * **High-Performance Caching Layer**: Integrates Redis to cache original URLs, drastically reducing MongoDB database reads and ensuring incredibly fast redirect latency.
@@ -12,7 +14,7 @@ A high-performance, full-stack URL shortening service engineered with FAANG-leve
 
 ---
 
-## 💻 Tech Stack
+## Tech Stack
 
 **Frontend:**
 * React (Vite)
@@ -31,7 +33,7 @@ A high-performance, full-stack URL shortening service engineered with FAANG-leve
 
 ---
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 Make sure you have the following installed on your machine:
@@ -65,7 +67,7 @@ npm run dev
 
 ---
 
-## 📡 API Endpoints
+## API Endpoints
 
 ### 1. Shorten a URL
 * **URL:** `/api/v1/urls`
@@ -97,7 +99,7 @@ npm run dev
 
 ---
 
-## 🏗️ Architectural Decisions
+##  Architectural Decisions
 
 1. **Why Base-58?**
    Base-58 avoids visually ambiguous characters like `0` (zero), `O` (capital o), `I` (capital i), and `l` (lowercase L). This makes the generated short links inherently more readable and less prone to human error when shared manually.
@@ -107,12 +109,3 @@ npm run dev
    Instead of generating a random hash and continually querying the database to check for collisions (which degrades performance at scale), this system uses a dedicated MongoDB counter to assign a strictly unique numeric ID to each request. This integer ID is then mathematically encoded into a short Base-58 string, guaranteeing uniqueness with zero collision checks.
 
 ---
-
-## 🌐 AWS Production Deployment Plan
-
-This project is architected to be deployed to a scalable cloud environment.
-
-* **Static Assets:** The compiled React `dist` folder directly hosted on **AWS S3** and distributed globally via **AWS CloudFront** with a custom SSL certificate.
-* **API Compute:** The Dockerized Express.js server deployed to **AWS Elastic Container Service (ECS) with Fargate** for serverless, horizontally scaling containers behind an **Application Load Balancer (ALB)**.
-* **Datastore:** Migrating local MongoDB to a managed **MongoDB Atlas** cluster.
-* **Cache:** Migrating local Redis to an **Amazon ElastiCache** Redis cluster provisioned inside the same VPC as the Fargate tasks.
